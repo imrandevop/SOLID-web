@@ -15,10 +15,30 @@ const LottoWebsite = () => {
   };
 
   const technologies = [
-    { name: 'Flutter', description: 'Cross-platform mobile development', icon: '📱' },
-    { name: 'React', description: 'Modern web applications', icon: '⚛️' },
-    { name: 'Python', description: 'Backend services & AI', icon: '🐍' },
-    { name: 'PostgreSQL', description: 'Robust database solutions', icon: '🗄️' }
+    { 
+      name: 'Flutter', 
+      description: 'Cross-platform mobile development', 
+      icon: '📱',
+      backgroundImage: 'https://images.unsplash.com/photo-1512941937669-90a1b58e7e9c?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80'
+    },
+    { 
+      name: 'React', 
+      description: 'Modern web applications', 
+      icon: '⚛️',
+      backgroundImage: 'https://images.unsplash.com/photo-1633356122544-f134324a6cee?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80'
+    },
+    { 
+      name: 'Python', 
+      description: 'Backend services & AI', 
+      icon: '🐍',
+      backgroundImage: 'https://images.unsplash.com/photo-1555949963-aa79dcee981c?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80'
+    },
+    { 
+      name: 'PostgreSQL', 
+      description: 'Robust database solutions', 
+      icon: '🗄️',
+      backgroundImage: 'https://images.unsplash.com/photo-1544383835-bda2bc66a55d?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80'
+    }
   ];
 
   const projectCategories = [
@@ -242,17 +262,22 @@ const LottoWebsite = () => {
       color: '#ffffff',
       borderBottomColor: '#6366f1'
     },
-    hero: {
-      padding: '12rem 1rem 10rem',
-      textAlign: 'center',
-      background: 'radial-gradient(ellipse at center, #0a0a0a 0%, #000000 70%)',
-      position: 'relative',
-      overflow: 'hidden',
-      margin: '2rem auto 1.5rem',
+    // Combined hero and features container
+    heroFeaturesContainer: {
       maxWidth: '95vw',
+      margin: '2rem auto 1.5rem',
       borderRadius: '16px',
       border: '1px solid #27272a',
       boxShadow: '0 12px 40px rgba(0, 0, 0, 0.5), 0 4px 12px rgba(0, 0, 0, 0.3)',
+      overflow: 'hidden',
+      background: 'linear-gradient(180deg, radial-gradient(ellipse at center, #0a0a0a 0%, #000000 70%) 0%, linear-gradient(145deg, #0a0a0a 0%, #1a1a1a 100%) 100%)',
+      position: 'relative'
+    },
+    hero: {
+      padding: '12rem 1rem 5rem',
+      textAlign: 'center',
+      position: 'relative',
+      overflow: 'hidden',
       minHeight: '600px'
     },
     heroBackground: {
@@ -260,13 +285,26 @@ const LottoWebsite = () => {
       top: 0,
       left: 0,
       right: 0,
-      bottom: 0,
+      height: '150%', // Extended height to cover more of the features section
       backgroundImage: 'url("https://images.unsplash.com/photo-1555066931-4365d14bab8c?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80")',
       backgroundSize: 'cover',
       backgroundPosition: 'center',
       backgroundRepeat: 'no-repeat',
       opacity: 0.15,
-      zIndex: 1
+      zIndex: 1,
+      // Extended fade out gradient overlay
+      background: `
+        linear-gradient(180deg, 
+          rgba(0,0,0,0) 0%, 
+          rgba(0,0,0,0.1) 40%, 
+          rgba(0,0,0,0.5) 75%, 
+          rgba(0,0,0,0.9) 90%,
+          rgba(0,0,0,1) 100%
+        ),
+        url("https://images.unsplash.com/photo-1555066931-4365d14bab8c?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80")
+      `,
+      backgroundSize: 'cover',
+      backgroundPosition: 'center'
     },
     heroContent: {
       maxWidth: '800px',
@@ -323,6 +361,13 @@ const LottoWebsite = () => {
       textDecoration: 'none',
       display: 'inline-block'
     },
+    // Features section within the blended container
+    featuresSection: {
+      padding: '5rem 1rem',
+      position: 'relative',
+      zIndex: 10
+    },
+    // Regular section styling for other sections
     section: {
       padding: '5rem 1rem',
       maxWidth: '95vw',
@@ -401,7 +446,26 @@ const LottoWebsite = () => {
       borderRadius: '12px',
       padding: '2rem',
       transition: 'all 0.3s ease',
-      boxShadow: '0 4px 16px rgba(0, 0, 0, 0.3), 0 1px 4px rgba(0, 0, 0, 0.2)'
+      boxShadow: '0 4px 16px rgba(0, 0, 0, 0.3), 0 1px 4px rgba(0, 0, 0, 0.2)',
+      position: 'relative',
+      overflow: 'hidden'
+    },
+    techCardBackground: {
+      position: 'absolute',
+      top: 0,
+      left: 0,
+      right: 0,
+      bottom: 0,
+      backgroundSize: 'cover',
+      backgroundPosition: 'center',
+      backgroundRepeat: 'no-repeat',
+      opacity: 0.1,
+      zIndex: 1,
+      borderRadius: '12px'
+    },
+    techContent: {
+      position: 'relative',
+      zIndex: 2
     },
     techIcon: {
       fontSize: '2rem',
@@ -569,7 +633,118 @@ const LottoWebsite = () => {
       margin: '1.5rem auto',
       maxWidth: '95vw',
       boxShadow: '0 8px 32px rgba(0, 0, 0, 0.4), 0 2px 8px rgba(0, 0, 0, 0.2)',
+      position: 'relative',
+      display: 'flex',
+      flexDirection: 'column',
+      alignItems: 'center',
+      gap: '3rem'
+    },
+    ctaContent: {
+      maxWidth: '600px',
+      zIndex: 2,
       position: 'relative'
+    },
+    ctaMockup: {
+      maxWidth: '800px',
+      width: '100%',
+      zIndex: 2,
+      position: 'relative'
+    },
+    mockupContainer: {
+      background: 'linear-gradient(145deg, #1f1f23 0%, #2a2a30 100%)',
+      borderRadius: '20px',
+      padding: '2.5rem',
+      border: '1px solid #3a3a42',
+      boxShadow: '0 20px 60px rgba(0, 0, 0, 0.6), 0 8px 24px rgba(0, 0, 0, 0.4)',
+      position: 'relative',
+      overflow: 'hidden',
+      transform: 'perspective(1000px) rotateX(5deg)',
+      maxWidth: '700px',
+      margin: '0 auto'
+    },
+    mockupHeader: {
+      display: 'flex',
+      alignItems: 'center',
+      gap: '1rem',
+      marginBottom: '1.5rem',
+      paddingBottom: '1rem',
+      borderBottom: '1px solid #3a3a42'
+    },
+    mockupInput: {
+      flex: 1,
+      background: '#2a2a30',
+      border: '1px solid #3a3a42',
+      borderRadius: '12px',
+      padding: '1rem 1.25rem',
+      color: '#9ca3af',
+      fontSize: '0.95rem',
+      fontStyle: 'italic',
+      fontWeight: '400',
+      boxShadow: 'inset 0 2px 4px rgba(0, 0, 0, 0.3)'
+    },
+    mockupOptions: {
+      display: 'flex',
+      flexDirection: 'column',
+      gap: '0.5rem'
+    },
+    mockupOption: {
+      display: 'flex',
+      alignItems: 'center',
+      gap: '1rem',
+      padding: '1rem 1.25rem',
+      background: '#2a2a30',
+      border: '1px solid #3a3a42',
+      borderRadius: '12px',
+      transition: 'all 0.2s ease',
+      cursor: 'pointer',
+      position: 'relative'
+    },
+    mockupOptionActive: {
+      borderColor: '#6366f1',
+      background: 'linear-gradient(145deg, rgba(99, 102, 241, 0.15) 0%, rgba(139, 92, 246, 0.10) 100%)',
+      boxShadow: '0 4px 12px rgba(99, 102, 241, 0.2)'
+    },
+    optionIcon: {
+      width: '36px',
+      height: '36px',
+      borderRadius: '8px',
+      display: 'flex',
+      alignItems: 'center',
+      justifyContent: 'center',
+      fontSize: '1.1rem',
+      flexShrink: 0
+    },
+    optionContent: {
+      flex: 1,
+      display: 'flex',
+      alignItems: 'center',
+      justifyContent: 'space-between'
+    },
+    optionLeft: {
+      display: 'flex',
+      flexDirection: 'column'
+    },
+    optionName: {
+      fontSize: '0.95rem',
+      fontWeight: '500',
+      color: '#ffffff',
+      marginBottom: '0.25rem',
+      lineHeight: '1.2'
+    },
+    optionDescription: {
+      fontSize: '0.8rem',
+      color: '#9ca3af',
+      lineHeight: '1.2'
+    },
+    optionType: {
+      fontSize: '0.75rem',
+      color: '#6b7280',
+      textTransform: 'uppercase',
+      letterSpacing: '0.05em',
+      padding: '0.25rem 0.75rem',
+      background: '#374151',
+      borderRadius: '12px',
+      fontWeight: '500'
     },
     ctaTitle: {
       fontSize: '2rem',
@@ -640,6 +815,10 @@ const LottoWebsite = () => {
             transform: translateY(-8px);
             border-color: #3f3f46;
             box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4), 0 2px 8px rgba(0, 0, 0, 0.3);
+          }
+          
+          .tech-card:hover .tech-card-bg {
+            opacity: 0.15;
           }
           
           .project-carousel {
@@ -719,6 +898,13 @@ const LottoWebsite = () => {
             color: #ffffff;
           }
           
+          .mockup-option:hover {
+            border-color: #4f46e5;
+            background: linear-gradient(145deg, rgba(99, 102, 241, 0.08) 0%, rgba(139, 92, 246, 0.05) 100%);
+            transform: translateY(-1px);
+            box-shadow: 0 2px 8px rgba(99, 102, 241, 0.15);
+          }
+          
           @media (max-width: 768px) {
             .hero-title { font-size: 2.5rem !important; }
             .hero-subtitle { font-size: 1.125rem !important; }
@@ -730,6 +916,8 @@ const LottoWebsite = () => {
             .category-circle { width: 60px; height: 60px; }
             .category-icon { font-size: 1.2rem; }
             .category-label { font-size: 0.5rem; }
+            .cta { flex-direction: column; gap: 2rem; padding: 3rem 1rem !important; }
+            .mockup-container { padding: 1rem !important; }
           }
           
           @media (max-width: 480px) {
@@ -777,57 +965,60 @@ const LottoWebsite = () => {
         </nav>
       </header>
 
-      <section id="home" style={styles.hero}>
-        <div style={styles.heroBackground}></div>
-        <div style={styles.heroContent}>
-          <h1 style={styles.heroTitle} className="hero-title">
-            IDEA into MVP
-          </h1>
-          <p style={styles.heroSubtitle} className="hero-subtitle">
-            LOTTO is a purpose-built development team for modern product development. We streamline your ideas from concept to deployment.
-          </p>
-          <div style={styles.heroButtons} className="hero-buttons">
-            <a 
-              href="#projects" 
-              style={styles.primaryButton}
-              className="primary-button"
-              onClick={(e) => {
-                e.preventDefault();
-                scrollToSection('projects');
-              }}
-            >
-              View our work
-            </a>
-            <a 
-              href="#features" 
-              style={styles.secondaryButton}
-              className="secondary-button"
-              onClick={(e) => {
-                e.preventDefault();
-                scrollToSection('features');
-              }}
-            >
-              Learn more
-            </a>
-          </div>
-        </div>
-      </section>
-
-      <section id="features" style={styles.section} className="section">
-        <h2 style={styles.sectionTitle} className="section-title">Made for modern product teams</h2>
-        <p style={styles.sectionSubtitle}>
-          LOTTO is shaped by the practices and principles that distinguish world-class product teams from the rest: relentless focus, fast execution, and a commitment to the quality of craft.
-        </p>
-        <div style={styles.featuresGrid}>
-          {features.map((feature, index) => (
-            <div key={index} style={styles.featureCard}>
-              <div style={styles.featureIcon}>{feature.icon}</div>
-              <h3 style={styles.featureTitle}>{feature.title}</h3>
-              <p style={styles.featureDescription}>{feature.description}</p>
+      {/* Combined Hero and Features Container */}
+      <div style={styles.heroFeaturesContainer}>
+        <section id="home" style={styles.hero}>
+          <div style={styles.heroBackground}></div>
+          <div style={styles.heroContent}>
+            <h1 style={styles.heroTitle} className="hero-title">
+              IDEA into MVP
+            </h1>
+            <p style={styles.heroSubtitle} className="hero-subtitle">
+              LOTTO is a purpose-built development team for modern product development. We streamline your ideas from concept to deployment.
+            </p>
+            <div style={styles.heroButtons} className="hero-buttons">
+              <a 
+                href="#projects" 
+                style={styles.primaryButton}
+                className="primary-button"
+                onClick={(e) => {
+                  e.preventDefault();
+                  scrollToSection('projects');
+                }}
+              >
+                View our work
+              </a>
+              <a 
+                href="#features" 
+                style={styles.secondaryButton}
+                className="secondary-button"
+                onClick={(e) => {
+                  e.preventDefault();
+                  scrollToSection('features');
+                }}
+              >
+                Learn more
+              </a>
             </div>
-          ))}
-        </div>
-      </section>
+          </div>
+        </section>
+
+        <section id="features" style={styles.featuresSection}>
+          <h2 style={styles.sectionTitle} className="section-title">Made for modern product teams</h2>
+          <p style={styles.sectionSubtitle}>
+            LOTTO is shaped by the practices and principles that distinguish world-class product teams from the rest: relentless focus, fast execution, and a commitment to the quality of craft.
+          </p>
+          <div style={styles.featuresGrid}>
+            {features.map((feature, index) => (
+              <div key={index} style={styles.featureCard}>
+                <div style={styles.featureIcon}>{feature.icon}</div>
+                <h3 style={styles.featureTitle}>{feature.title}</h3>
+                <p style={styles.featureDescription}>{feature.description}</p>
+              </div>
+            ))}
+          </div>
+        </section>
+      </div>
 
       <section id="technology" style={styles.section} className="section">
         <h2 style={styles.sectionTitle} className="section-title">Built on strong foundations</h2>
@@ -837,9 +1028,18 @@ const LottoWebsite = () => {
         <div style={styles.techGrid}>
           {technologies.map((tech, index) => (
             <div key={index} style={styles.techCard} className="tech-card">
-              <div style={styles.techIcon}>{tech.icon}</div>
-              <h3 style={styles.techName}>{tech.name}</h3>
-              <p style={styles.techDescription}>{tech.description}</p>
+              <div 
+                style={{
+                  ...styles.techCardBackground,
+                  backgroundImage: `url(${tech.backgroundImage})`
+                }}
+                className="tech-card-bg"
+              ></div>
+              <div style={styles.techContent}>
+                <div style={styles.techIcon}>{tech.icon}</div>
+                <h3 style={styles.techName}>{tech.name}</h3>
+                <p style={styles.techDescription}>{tech.description}</p>
+              </div>
             </div>
           ))}
         </div>
@@ -963,13 +1163,63 @@ const LottoWebsite = () => {
       </section>
 
       <div style={styles.cta}>
-        <h2 style={styles.ctaTitle}>Ready to transform your idea?</h2>
-        <p style={styles.ctaDescription}>
-          Professional website development starting at just ₹999. Get a stunning, responsive website for your business with modern design and optimized performance.
-        </p>
-        <a href="#contact" style={styles.ctaButton} className="cta-button">
-          Start your project
-        </a>
+        <div style={styles.ctaContent}>
+          <h2 style={styles.ctaTitle}>Ready to transform your idea?</h2>
+          <p style={styles.ctaDescription}>
+            Professional website development starting at just ₹999. Get a stunning, responsive website for your business with modern design and optimized performance.
+          </p>
+          <a href="#contact" style={styles.ctaButton} className="cta-button">
+            Start your project
+          </a>
+        </div>
+        
+        <div style={styles.ctaMockup}>
+          <div style={styles.mockupContainer}>
+            <div style={styles.mockupHeader}>
+              <div style={styles.mockupInput}>
+                Assign to...
+              </div>
+            </div>
+            <div style={styles.mockupOptions}>
+              <div style={{...styles.mockupOption, ...styles.mockupOptionActive}}>
+                <div style={{...styles.optionIcon, background: 'linear-gradient(135deg, #8b5cf6 0%, #a855f7 100%)'}}>
+                  🛡️
+                </div>
+                <div style={styles.optionContent}>
+                  <div style={styles.optionName}>Frontend Developer</div>
+                  <div style={styles.optionType}>Team</div>
+                </div>
+              </div>
+              <div style={styles.mockupOption} className="mockup-option">
+                <div style={{...styles.optionIcon, background: 'linear-gradient(135deg, #06b6d4 0%, #0891b2 100%)'}}>
+                  ⚛️
+                </div>
+                <div style={styles.optionContent}>
+                  <div style={styles.optionName}>React Specialist</div>
+                  <div style={styles.optionType}>Team</div>
+                </div>
+              </div>
+              <div style={styles.mockupOption}>
+                <div style={{...styles.optionIcon, background: 'linear-gradient(135deg, #f59e0b 0%, #d97706 100%)'}}>
+                  🐍
+                </div>
+                <div style={styles.optionContent}>
+                  <div style={styles.optionName}>Python Developer</div>
+                  <div style={styles.optionType}>Team</div>
+                </div>
+              </div>
+              <div style={styles.mockupOption}>
+                <div style={{...styles.optionIcon, background: 'linear-gradient(135deg, #10b981 0%, #059669 100%)'}}>
+                  📱
+                </div>
+                <div style={styles.optionContent}>
+                  <div style={styles.optionName}>Mobile Expert</div>
+                  <div style={styles.optionType}>Team</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
 
       <footer style={styles.footer}>
