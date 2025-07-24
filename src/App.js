@@ -46,7 +46,7 @@ const LottoWebsite = () => {
   ];
 
   const projectCategories = [
-    { id: "web", name: "Web Development", icon: "icons/lotto-icon.png" },
+    { id: "web", name: "Lotto", icon: "icons/lotto-icon.png" },
     { id: "mobile", name: "Mobile Development", icon: "📱" },
     { id: "enterprise", name: "Enterprise Software", icon: "🏢" },
     { id: "data", name: "Data Solutions", icon: "📊" },
@@ -61,11 +61,12 @@ const LottoWebsite = () => {
         "Full-stack solution with payment integration, inventory management, and analytics dashboard.",
       category: "web",
       images: [
-        "https://via.placeholder.com/800x500/1a1a1a/6366f1?text=E-Commerce+Homepage",
-        "https://via.placeholder.com/800x500/1a1a1a/6366f1?text=Product+Catalog",
-        "https://via.placeholder.com/800x500/1a1a1a/6366f1?text=Shopping+Cart",
-        "https://via.placeholder.com/800x500/1a1a1a/6366f1?text=Payment+Gateway",
-        "https://via.placeholder.com/800x500/1a1a1a/6366f1?text=Admin+Dashboard",
+        "/screenshots/lotto1.png",
+        "/screenshots/lotto2.png",
+        "/screenshots/lotto3.png",
+        "/screenshots/lotto4.png",
+        "/screenshots/lotto5.png",
+        "/screenshots/lotto6.png",
       ],
     },
     {
@@ -288,10 +289,10 @@ const LottoWebsite = () => {
       borderRadius: "16px",
       border: "1px solid #27272a",
       boxShadow:
-        "0 12px 40px rgba(0, 0, 0, 0.5), 0 4px 12px rgba(0, 0, 0, 0.3)",
+        "0 8px 32px rgba(0, 0, 0, 0.4), 0 2px 8px rgba(0, 0, 0, 0.2)",
       overflow: "hidden",
       background:
-        "linear-gradient(180deg, radial-gradient(ellipse at center, #0a0a0a 0%, #000000 70%) 0%, linear-gradient(145deg, #0a0a0a 0%, #1a1a1a 100%) 100%)",
+        "linear-gradient(145deg, #0a0a0a 0%, #1a1a1a 100%)",
       position: "relative",
     },
     hero: {
@@ -388,7 +389,7 @@ const LottoWebsite = () => {
     section: {
       padding: "5rem 1rem",
       maxWidth: "95vw",
-      margin: "1.5rem auto",
+      margin: "2rem auto 1.5rem",
       background: "linear-gradient(145deg, #0a0a0a 0%, #1a1a1a 100%)",
       borderRadius: "16px",
       border: "1px solid #27272a",
@@ -587,10 +588,11 @@ const LottoWebsite = () => {
       scrollBehavior: "smooth",
     },
     projectImage: {
-      width: "300px",
-      height: "500px",
+      width: "220px",
+      height: "391px",
       borderRadius: "12px",
-      objectFit: "cover",
+      objectFit: "contain",
+      background: "#18181b",
       border: "1px solid #27272a",
       boxShadow: "0 4px 16px rgba(0, 0, 0, 0.3)",
       flexShrink: 0,
@@ -644,19 +646,20 @@ const LottoWebsite = () => {
       lineHeight: "1.5",
     },
     cta: {
-      background: "linear-gradient(145deg, #0a0a0a 0%, #1a1a1a 100%)",
+      background: `url('/last2.jpg') center/cover no-repeat`,
       border: "1px solid #3f3f46",
       borderRadius: "16px",
-      padding: "4rem 1rem",
+      padding: "8rem 1rem",
       textAlign: "center",
-      margin: "1.5rem auto",
+      margin: "2rem auto 1.5rem",
       maxWidth: "95vw",
       boxShadow: "0 8px 32px rgba(0, 0, 0, 0.4), 0 2px 8px rgba(0, 0, 0, 0.2)",
       position: "relative",
       display: "flex",
       flexDirection: "column",
       alignItems: "center",
-      gap: "3rem",
+      gap: "6rem",
+      overflow: "hidden",
     },
     ctaContent: {
       maxWidth: "600px",
@@ -1099,6 +1102,7 @@ const LottoWebsite = () => {
         </div>
       </section>
 
+      {/* Projects Heading & Subtitle */}
       <section id="projects" style={styles.section} className="section">
         <h2 style={styles.sectionTitle} className="section-title">
           Powering the world's best product teams
@@ -1107,32 +1111,90 @@ const LottoWebsite = () => {
           From next-gen startups to established enterprises, we deliver
           solutions that scale with your business.
         </p>
+      </section>
 
+      {/* Category Logos */}
+      <section
+        style={{
+          ...styles.section,
+          padding: "1.5rem 1rem 0.75rem 1rem",
+          margin: "2rem auto 1.5rem",
+          background: "none",
+          boxShadow: "none",
+          border: "none",
+        }}
+      >
         <div style={styles.categoryFilter} className="category-filter">
           {projectCategories.map((category) => (
-            <div
-              key={category.id}
-              style={{
-                ...styles.categoryCircle,
-                ...(selectedCategory === category.id
-                  ? styles.categoryCircleActive
-                  : {}),
-              }}
-              className="category-circle"
-              onClick={() => setSelectedCategory(category.id)}
-            >
-              <div style={styles.categoryIcon}>
-                <img
-                  src={category.icon}
-                  alt={category.name}
-                  style={{ width: "100%", height: "100%" }}
-                />
+            <React.Fragment key={category.id}>
+              <div
+                style={{
+                  display: "flex",
+                  flexDirection: "column",
+                  alignItems: "center",
+                }}
+              >
+                <div
+                  style={{
+                    ...styles.categoryCircle,
+                    ...(selectedCategory === category.id
+                      ? styles.categoryCircleActive
+                      : {}),
+                  }}
+                  className="category-circle"
+                  onClick={() => setSelectedCategory(category.id)}
+                >
+                  <div style={styles.categoryIcon}>
+                    {typeof category.icon === "string" &&
+                    category.icon.endsWith(".png") ? (
+                      <img
+                        src={category.icon}
+                        alt={category.name}
+                        style={{
+                          width: "56px",
+                          height: "56px",
+                          objectFit: "contain",
+                          borderRadius: "50%",
+                          padding: "6px",
+                          boxSizing: "border-box",
+                          display: "block",
+                          margin: "0 auto",
+                          boxShadow: "0 1px 4px rgba(0,0,0,0.10)",
+                        }}
+                      />
+                    ) : (
+                      <span style={{ fontSize: "2.4rem", lineHeight: 1 }}>
+                        {category.icon}
+                      </span>
+                    )}
+                  </div>
+                </div>
+                <div
+                  style={{
+                    ...styles.categoryLabel,
+                    marginTop: "0.5rem",
+                    textAlign: "center",
+                    width: "100%",
+                  }}
+                >
+                  {category.name}
+                </div>
               </div>
-              <div style={styles.categoryLabel}>{category.name}</div>
-            </div>
+            </React.Fragment>
           ))}
         </div>
+      </section>
 
+      {/* Project Screenshots Carousel */}
+      <section
+        style={{
+          ...styles.section,
+          margin: "2rem auto 1.5rem",
+          paddingTop: "2rem",
+          paddingBottom: "5rem",
+        }}
+        className="section"
+      >
         <div style={styles.projectShowcase}>
           {selectedProject && (
             <>
@@ -1233,7 +1295,19 @@ const LottoWebsite = () => {
       </section>
 
       <div style={styles.cta}>
-        <div style={styles.ctaContent}>
+        {/* Overlay for readability */}
+        <div
+          style={{
+            position: "absolute",
+            top: 0,
+            left: 0,
+            width: "100%",
+            height: "100%",
+            background: "rgba(0,0,0,0.55)",
+            zIndex: 1,
+          }}
+        ></div>
+        <div style={{ ...styles.ctaContent, position: "relative", zIndex: 2 }}>
           <h2 style={styles.ctaTitle}>Ready to transform your idea?</h2>
           <p style={styles.ctaDescription}>
             Professional website development starting at just ₹999. Get a
@@ -1243,78 +1317,6 @@ const LottoWebsite = () => {
           <a href="#contact" style={styles.ctaButton} className="cta-button">
             Start your project
           </a>
-        </div>
-
-        <div style={styles.ctaMockup}>
-          <div style={styles.mockupContainer}>
-            <div style={styles.mockupHeader}>
-              <div style={styles.mockupInput}>Assign to...</div>
-            </div>
-            <div style={styles.mockupOptions}>
-              <div
-                style={{ ...styles.mockupOption, ...styles.mockupOptionActive }}
-              >
-                <div
-                  style={{
-                    ...styles.optionIcon,
-                    background:
-                      "linear-gradient(135deg, #8b5cf6 0%, #a855f7 100%)",
-                  }}
-                >
-                  🛡️
-                </div>
-                <div style={styles.optionContent}>
-                  <div style={styles.optionName}>Frontend Developer</div>
-                  <div style={styles.optionType}>Team</div>
-                </div>
-              </div>
-              <div style={styles.mockupOption} className="mockup-option">
-                <div
-                  style={{
-                    ...styles.optionIcon,
-                    background:
-                      "linear-gradient(135deg, #06b6d4 0%, #0891b2 100%)",
-                  }}
-                >
-                  ⚛️
-                </div>
-                <div style={styles.optionContent}>
-                  <div style={styles.optionName}>React Specialist</div>
-                  <div style={styles.optionType}>Team</div>
-                </div>
-              </div>
-              <div style={styles.mockupOption}>
-                <div
-                  style={{
-                    ...styles.optionIcon,
-                    background:
-                      "linear-gradient(135deg, #f59e0b 0%, #d97706 100%)",
-                  }}
-                >
-                  🐍
-                </div>
-                <div style={styles.optionContent}>
-                  <div style={styles.optionName}>Python Developer</div>
-                  <div style={styles.optionType}>Team</div>
-                </div>
-              </div>
-              <div style={styles.mockupOption}>
-                <div
-                  style={{
-                    ...styles.optionIcon,
-                    background:
-                      "linear-gradient(135deg, #10b981 0%, #059669 100%)",
-                  }}
-                >
-                  📱
-                </div>
-                <div style={styles.optionContent}>
-                  <div style={styles.optionName}>Mobile Expert</div>
-                  <div style={styles.optionType}>Team</div>
-                </div>
-              </div>
-            </div>
-          </div>
         </div>
       </div>
 
