@@ -285,7 +285,8 @@ const LottoWebsite = () => {
     // Combined hero and features container
     heroFeaturesContainer: {
       maxWidth: "95vw",
-      margin: "2rem auto 1.5rem",
+      margin: "1.5rem auto 1.5rem auto",
+      padding: "0 0.5rem",
       borderRadius: "16px",
       border: "1px solid #27272a",
       boxShadow:
@@ -296,7 +297,7 @@ const LottoWebsite = () => {
       position: "relative",
     },
     hero: {
-      padding: "12rem 1rem 5rem",
+      padding: "12rem 2rem 5rem",
       textAlign: "center",
       position: "relative",
       overflow: "hidden",
@@ -387,14 +388,17 @@ const LottoWebsite = () => {
     },
     // Regular section styling for other sections
     section: {
-      padding: "5rem 1rem",
+      padding: "0 0.5rem",
       maxWidth: "95vw",
-      margin: "2rem auto 1.5rem",
+      margin: "1.5rem auto",
       background: "linear-gradient(145deg, #0a0a0a 0%, #1a1a1a 100%)",
       borderRadius: "16px",
       border: "1px solid #27272a",
       boxShadow: "0 8px 32px rgba(0, 0, 0, 0.4), 0 2px 8px rgba(0, 0, 0, 0.2)",
       position: "relative",
+    },
+    sectionContent: {
+      padding: "5rem 1rem",
     },
     sectionTitle: {
       fontSize: "2.5rem",
@@ -418,12 +422,12 @@ const LottoWebsite = () => {
       display: "flex",
       justifyContent: "center",
       gap: "1rem",
-      marginBottom: "4rem",
+      marginBottom: "1rem",
       flexWrap: "wrap",
     },
     categoryCircle: {
-      width: "80px",
-      height: "80px",
+      width: "60px",
+      height: "60px",
       borderRadius: "50%",
       background: "linear-gradient(145deg, #0a0a0a 0%, #1a1a1a 100%)",
       border: "2px solid #27272a",
@@ -651,7 +655,7 @@ const LottoWebsite = () => {
       borderRadius: "16px",
       padding: "8rem 1rem",
       textAlign: "center",
-      margin: "2rem auto 1.5rem",
+      margin: "1.5rem auto",
       maxWidth: "95vw",
       boxShadow: "0 8px 32px rgba(0, 0, 0, 0.4), 0 2px 8px rgba(0, 0, 0, 0.2)",
       position: "relative",
@@ -1071,117 +1075,123 @@ const LottoWebsite = () => {
       </div>
 
       <section id="technology" style={styles.section} className="section">
-        <h2 style={styles.sectionTitle} className="section-title">
-          Built on strong foundations
-        </h2>
-        <p style={styles.sectionSubtitle}>
-          Our technology stack is built with modern frameworks and tools that
-          keep your products robust, safe, and blazing fast.
-        </p>
-        <div style={styles.techGrid}>
-          {technologies.map((tech, index) => (
-            <div key={index} style={styles.techCard} className="tech-card">
-              <div
-                style={{
-                  ...styles.techCardBackground,
-                  backgroundImage: `url(${tech.backgroundImage})`,
-                }}
-                className="tech-card-bg"
-              ></div>
-              <div style={styles.techContent}>
-                <img
-                  src={tech.icon}
-                  alt={`${tech.name} icon`}
-                  style={styles.techIcon}
-                />
-                <h3 style={styles.techName}>{tech.name}</h3>
-                <p style={styles.techDescription}>{tech.description}</p>
+        <div style={styles.sectionContent}>
+          <h2 style={styles.sectionTitle} className="section-title">
+            Built on strong foundations
+          </h2>
+          <p style={styles.sectionSubtitle}>
+            Our technology stack is built with modern frameworks and tools that
+            keep your products robust, safe, and blazing fast.
+          </p>
+          <div style={styles.techGrid}>
+            {technologies.map((tech, index) => (
+              <div key={index} style={styles.techCard} className="tech-card">
+                <div
+                  style={{
+                    ...styles.techCardBackground,
+                    backgroundImage: `url(${tech.backgroundImage})`,
+                  }}
+                  className="tech-card-bg"
+                ></div>
+                <div style={styles.techContent}>
+                  <img
+                    src={tech.icon}
+                    alt={`${tech.name} icon`}
+                    style={styles.techIcon}
+                  />
+                  <h3 style={styles.techName}>{tech.name}</h3>
+                  <p style={styles.techDescription}>{tech.description}</p>
+                </div>
               </div>
-            </div>
-          ))}
+            ))}
+          </div>
         </div>
       </section>
 
       {/* Projects Heading & Subtitle */}
       <section id="projects" style={styles.section} className="section">
-        <h2 style={styles.sectionTitle} className="section-title">
-          Powering the world's best product teams
-        </h2>
-        <p style={styles.sectionSubtitle}>
-          From next-gen startups to established enterprises, we deliver
-          solutions that scale with your business.
-        </p>
+        <div style={styles.sectionContent}>
+          <h2 style={styles.sectionTitle} className="section-title">
+            Powering the world's best product teams
+          </h2>
+          <p style={styles.sectionSubtitle}>
+            From next-gen startups to established enterprises, we deliver
+            solutions that scale with your business.
+          </p>
+        </div>
       </section>
 
       {/* Category Logos */}
       <section
         style={{
           ...styles.section,
-          padding: "1.5rem 1rem 0.75rem 1rem",
-          margin: "2rem auto 1.5rem",
+          padding: "0 0.5rem",
+          margin: "0.5rem auto",
           background: "none",
           boxShadow: "none",
           border: "none",
         }}
       >
-        <div style={styles.categoryFilter} className="category-filter">
-          {projectCategories.map((category) => (
-            <React.Fragment key={category.id}>
-              <div
-                style={{
-                  display: "flex",
-                  flexDirection: "column",
-                  alignItems: "center",
-                }}
-              >
+        <div style={{padding: "0.5rem 1rem 0.25rem 1rem"}}>
+          <div style={styles.categoryFilter} className="category-filter">
+            {projectCategories.map((category) => (
+              <React.Fragment key={category.id}>
                 <div
                   style={{
-                    ...styles.categoryCircle,
-                    ...(selectedCategory === category.id
-                      ? styles.categoryCircleActive
-                      : {}),
+                    display: "flex",
+                    flexDirection: "column",
+                    alignItems: "center",
                   }}
-                  className="category-circle"
-                  onClick={() => setSelectedCategory(category.id)}
                 >
-                  <div style={styles.categoryIcon}>
-                    {typeof category.icon === "string" &&
-                    category.icon.endsWith(".png") ? (
-                      <img
-                        src={category.icon}
-                        alt={category.name}
-                        style={{
-                          width: "56px",
-                          height: "56px",
-                          objectFit: "contain",
-                          borderRadius: "50%",
-                          padding: "6px",
-                          boxSizing: "border-box",
-                          display: "block",
-                          margin: "0 auto",
-                          boxShadow: "0 1px 4px rgba(0,0,0,0.10)",
-                        }}
-                      />
-                    ) : (
-                      <span style={{ fontSize: "2.4rem", lineHeight: 1 }}>
-                        {category.icon}
-                      </span>
-                    )}
+                  <div
+                    style={{
+                      ...styles.categoryCircle,
+                      ...(selectedCategory === category.id
+                        ? styles.categoryCircleActive
+                        : {}),
+                    }}
+                    className="category-circle"
+                    onClick={() => setSelectedCategory(category.id)}
+                  >
+                    <div style={styles.categoryIcon}>
+                      {typeof category.icon === "string" &&
+                      category.icon.endsWith(".png") ? (
+                        <img
+                          src={category.icon}
+                          alt={category.name}
+                          style={{
+                            width: "40px",
+                            height: "40px",
+                            objectFit: "contain",
+                            borderRadius: "50%",
+                            padding: "4px",
+                            boxSizing: "border-box",
+                            display: "block",
+                            margin: "0 auto",
+                            boxShadow: "0 1px 4px rgba(0,0,0,0.10)",
+                          }}
+                        />
+                      ) : (
+                        <span style={{ fontSize: "2.4rem", lineHeight: 1 }}>
+                          {category.icon}
+                        </span>
+                      )}
+                    </div>
+                  </div>
+                  <div
+                    style={{
+                      ...styles.categoryLabel,
+                      marginTop: "0.5rem",
+                      textAlign: "center",
+                      width: "100%",
+                    }}
+                  >
+                    {category.name}
                   </div>
                 </div>
-                <div
-                  style={{
-                    ...styles.categoryLabel,
-                    marginTop: "0.5rem",
-                    textAlign: "center",
-                    width: "100%",
-                  }}
-                >
-                  {category.name}
-                </div>
-              </div>
-            </React.Fragment>
-          ))}
+              </React.Fragment>
+            ))}
+          </div>
         </div>
       </section>
 
@@ -1189,107 +1199,109 @@ const LottoWebsite = () => {
       <section
         style={{
           ...styles.section,
-          margin: "2rem auto 1.5rem",
-          paddingTop: "2rem",
-          paddingBottom: "5rem",
+          margin: "1.5rem auto",
         }}
         className="section"
       >
-        <div style={styles.projectShowcase}>
-          {selectedProject && (
-            <>
-              <h3 style={styles.projectTitle}>{selectedProject.title}</h3>
-              <div style={styles.imageCarouselContainer}>
-                <button
-                  style={styles.carouselButton}
-                  className="carousel-button"
-                  onClick={() => {
-                    const container =
-                      document.querySelector(".project-carousel");
-                    container.scrollBy({ left: -320, behavior: "smooth" });
-                  }}
-                >
-                  ‹
-                </button>
-                <div style={styles.imageCarousel} className="project-carousel">
-                  {selectedProject.images.map((image, index) => (
-                    <img
-                      key={index}
-                      src={image}
-                      alt={`${selectedProject.title} - Screenshot ${index + 1}`}
-                      style={styles.projectImage}
-                      className="project-image"
-                    />
-                  ))}
+        <div style={{padding: "2rem 1rem 5rem 1rem"}}>
+          <div style={styles.projectShowcase}>
+            {selectedProject && (
+              <>
+                <h3 style={styles.projectTitle}>{selectedProject.title}</h3>
+                <div style={styles.imageCarouselContainer}>
+                  <button
+                    style={styles.carouselButton}
+                    className="carousel-button"
+                    onClick={() => {
+                      const container =
+                        document.querySelector(".project-carousel");
+                      container.scrollBy({ left: -320, behavior: "smooth" });
+                    }}
+                  >
+                    ‹
+                  </button>
+                  <div style={styles.imageCarousel} className="project-carousel">
+                    {selectedProject.images.map((image, index) => (
+                      <img
+                        key={index}
+                        src={image}
+                        alt={`${selectedProject.title} - Screenshot ${index + 1}`}
+                        style={styles.projectImage}
+                        className="project-image"
+                      />
+                    ))}
+                  </div>
+                  <button
+                    style={styles.carouselButton}
+                    className="carousel-button"
+                    onClick={() => {
+                      const container =
+                        document.querySelector(".project-carousel");
+                      container.scrollBy({ left: 320, behavior: "smooth" });
+                    }}
+                  >
+                    ›
+                  </button>
                 </div>
-                <button
-                  style={styles.carouselButton}
-                  className="carousel-button"
-                  onClick={() => {
-                    const container =
-                      document.querySelector(".project-carousel");
-                    container.scrollBy({ left: 320, behavior: "smooth" });
-                  }}
-                >
-                  ›
-                </button>
-              </div>
-            </>
-          )}
+              </>
+            )}
+          </div>
         </div>
       </section>
 
       <section id="team" style={styles.section} className="section">
-        <h2 style={styles.sectionTitle} className="section-title">
-          Meet our team
-        </h2>
-        <p style={styles.sectionSubtitle}>
-          Our diverse team of experts brings together years of experience in
-          modern software development, design, and engineering.
-        </p>
-        <div style={styles.teamContainer}>
-          <div style={styles.teamScrollContainer}>
-            <button
-              style={styles.carouselButton}
-              className="carousel-button"
-              onClick={() => {
-                const container = document.querySelector(".team-grid");
-                container.scrollBy({ left: -300, behavior: "smooth" });
-              }}
-            >
-              ‹
-            </button>
-            <div style={styles.teamGrid} className="team-grid">
-              {teamMembers.map((member, index) => (
-                <div key={index} style={styles.teamCard} className="team-card">
-                  <img
-                    src={member.image}
-                    alt={member.name}
-                    style={styles.teamImage}
-                  />
-                  <h3 style={styles.teamName}>{member.name}</h3>
-                  <div style={styles.teamRole}>{member.role}</div>
-                  <p style={styles.teamBio}>{member.bio}</p>
-                  <div style={styles.teamSkills}>
-                    {member.skills.map((skill, skillIndex) => (
-                      <span key={skillIndex} style={styles.skillTag}>
-                        {skill}
-                      </span>
-                    ))}
+        <div style={styles.sectionContent}>
+          <h2 style={styles.sectionTitle} className="section-title">
+            Meet our team
+          </h2>
+          <p style={styles.sectionSubtitle}>
+            Our diverse team of experts brings together years of experience in
+            modern software development, design, and engineering.
+          </p>
+          <div style={styles.teamContainer}>
+            <div style={styles.teamScrollContainer}>
+              <button
+                style={styles.carouselButton}
+                className="carousel-button"
+                onClick={() => {
+                  const container = document.querySelector(".team-grid");
+                  container.scrollBy({ left: -300, behavior: "smooth" });
+                }}
+              >
+                ‹
+              </button>
+              <div style={styles.teamGrid} className="team-grid">
+                {teamMembers.map((member, index) => (
+                  <div key={index} style={styles.teamCard} className="team-card">
+                    <img
+                      src={member.image}
+                      alt={member.name}
+                      style={styles.teamImage}
+                    />
+                    <h3 style={styles.teamName}>{member.name}</h3>
+                    <div style={styles.teamRole}>{member.role}</div>
+                    <p style={styles.teamBio}>{member.bio}</p>
+                    <div style={styles.teamSkills}>
+                      {member.skills.map((skill, skillIndex) => (
+                        <span key={skillIndex} style={styles.skillTag}>
+                          {skill}
+                        </span>
+                      ))}
+                    </div>
                   </div>
-                </div>
-              ))}
+                ))}
+              </div>
+              <button
+                style={styles.carouselButton}
+                className="carousel-button"
+                onClick={() => {
+                  const container = document.querySelector(".team-grid");
+                  container.scrollBy({ left: 300, behavior: "smooth" });
+                }}
+              >
+                ›
+              </button>
             </div>
-            <button
-              style={styles.carouselButton}
-              className="carousel-button"
-              onClick={() => {
-                const container = document.querySelector(".team-grid");
-                container.scrollBy({ left: 300, behavior: "smooth" });
-              }}
-            >
-              ›
-            </button>
           </div>
         </div>
       </section>
