@@ -1,10 +1,90 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 
 const LottoWebsite = () => {
   const [activeSection, setActiveSection] = useState("home");
-  const [selectedCategory, setSelectedCategory] = useState("edtech");
+  const [selectedCategory, setSelectedCategory] = useState("web");
+  const [isDragging, setIsDragging] = useState(false);
+  const [startX, setStartX] = useState(0);
+  const [scrollLeft, setScrollLeft] = useState(0);
+  const [isScrolling, setIsScrolling] = useState(false);
 
-  const [currentImageIndex, setCurrentImageIndex] = useState(0);
+  useEffect(() => {
+    // Initialize scroll position to the middle section
+    const container = document.querySelector('.category-filter');
+    if (container) {
+      const itemWidth = 80;
+      const totalItems = projectCategories.length + dummyCircles.length;
+      const sectionWidth = totalItems * itemWidth;
+      container.scrollLeft = sectionWidth;
+    }
+  }, []);
+
+  const handleWheel = (e) => {
+    e.preventDefault();
+    const container = e.currentTarget;
+    const scrollAmount = e.deltaY * 0.8;
+    
+    container.scrollTo({
+      left: container.scrollLeft + scrollAmount,
+      behavior: 'smooth'
+    });
+    
+    checkInfiniteScroll(container);
+  };
+
+  const handleMouseDown = (e) => {
+    setIsDragging(true);
+    setStartX(e.pageX - e.currentTarget.offsetLeft);
+    setScrollLeft(e.currentTarget.scrollLeft);
+    e.currentTarget.style.cursor = 'grabbing';
+    e.currentTarget.style.scrollBehavior = 'auto'; // Disable smooth scroll during drag
+  };
+
+  const handleMouseLeave = (e) => {
+    setIsDragging(false);
+    e.currentTarget.style.cursor = 'grab';
+    e.currentTarget.style.scrollBehavior = 'smooth'; // Re-enable smooth scroll
+  };
+
+  const handleMouseUp = (e) => {
+    setIsDragging(false);
+    e.currentTarget.style.cursor = 'grab';
+    e.currentTarget.style.scrollBehavior = 'smooth'; // Re-enable smooth scroll
+  };
+
+  const handleMouseMove = (e) => {
+    if (!isDragging) return;
+    e.preventDefault();
+    
+    const x = e.pageX - e.currentTarget.offsetLeft;
+    const walk = (x - startX) * 0.8;
+    e.currentTarget.scrollLeft = scrollLeft - walk;
+    
+    checkInfiniteScroll(e.currentTarget);
+  };
+
+  const checkInfiniteScroll = (container) => {
+    if (isScrolling) return;
+    
+    const scrollLeft = container.scrollLeft;
+    const scrollWidth = container.scrollWidth;
+    const clientWidth = container.clientWidth;
+    const itemWidth = 80; // Width of each category item
+    const totalItems = projectCategories.length + dummyCircles.length;
+    const sectionWidth = totalItems * itemWidth;
+    
+    // Reset position when reaching near the end or beginning
+    if (scrollLeft >= sectionWidth * 1.5) {
+      setIsScrolling(true);
+      container.scrollLeft = sectionWidth * 0.5;
+      setTimeout(() => setIsScrolling(false), 50);
+    } else if (scrollLeft <= sectionWidth * 0.25) {
+      setIsScrolling(true);
+      container.scrollLeft = sectionWidth * 1.25;
+      setTimeout(() => setIsScrolling(false), 50);
+    }
+  };
+
 
   const scrollToSection = (sectionId) => {
     setActiveSection(sectionId);
@@ -47,18 +127,33 @@ const LottoWebsite = () => {
 
   const projectCategories = [
     { id: "web", name: "Lotto", icon: "icons/lotto-icon.png" },
-    { id: "mobile", name: "Mobile Development", icon: "📱" },
-    { id: "enterprise", name: "Enterprise Software", icon: "🏢" },
-    { id: "data", name: "Data Solutions", icon: "📊" },
-    { id: "social", name: "Social Technology", icon: "👥" },
-    { id: "edtech", name: "EdTech", icon: "📚" },
+    { id: "mobile", name: "Mobile Apps", icon: "📱" },
+    { id: "enterprise", name: "Enterprise Solutions", icon: "🏢" },
+    { id: "ecommerce", name: "E-Commerce", icon: "🛍️" },
+    { id: "cms", name: "CMS Platforms", icon: "📋" },
+    { id: "saas", name: "SaaS Products", icon: "☁️" },
+  ];
+
+  const dummyCircles = [
+    { id: "circle1", color: "#6366f1", name: "Circle 1" },
+    { id: "circle2", color: "#8b5cf6", name: "Circle 2" },
+    { id: "circle3", color: "#10b981", name: "Circle 3" },
+    { id: "circle4", color: "#f59e0b", name: "Circle 4" },
+    { id: "circle5", color: "#ef4444", name: "Circle 5" },
+    { id: "circle6", color: "#06b6d4", name: "Circle 6" },
+    { id: "circle7", color: "#84cc16", name: "Circle 7" },
+    { id: "circle8", color: "#f97316", name: "Circle 8" },
+    { id: "circle9", color: "#ec4899", name: "Circle 9" },
+    { id: "circle10", color: "#14b8a6", name: "Circle 10" },
+    { id: "circle11", color: "#a855f7", name: "Circle 11" },
+    { id: "circle12", color: "#22c55e", name: "Circle 12" },
   ];
 
   const products = [
     {
-      title: "E-Commerce Platform",
+      title: "Corporate Website",
       description:
-        "Full-stack solution with payment integration, inventory management, and analytics dashboard.",
+        "Professional responsive websites with modern design, SEO optimization, and content management systems.",
       category: "web",
       images: [
         "/screenshots/lotto1.png",
@@ -70,126 +165,126 @@ const LottoWebsite = () => {
       ],
     },
     {
-      title: "Mobile Banking App",
+      title: "Business Mobile App",
       description:
-        "Secure banking with biometric authentication, real-time transactions, and fraud detection.",
+        "Cross-platform mobile applications with native performance, secure authentication, and cloud integration.",
       category: "mobile",
       images: [
-        "https://via.placeholder.com/800x500/1a1a1a/8b5cf6?text=Login+Screen",
-        "https://via.placeholder.com/800x500/1a1a1a/8b5cf6?text=Dashboard",
-        "https://via.placeholder.com/800x500/1a1a1a/8b5cf6?text=Transfer+Money",
-        "https://via.placeholder.com/800x500/1a1a1a/8b5cf6?text=Transaction+History",
-        "https://via.placeholder.com/800x500/1a1a1a/8b5cf6?text=Security+Settings",
+        "https://via.placeholder.com/800x500/1a1a1a/8b5cf6?text=App+Dashboard",
+        "https://via.placeholder.com/800x500/1a1a1a/8b5cf6?text=User+Profile",
+        "https://via.placeholder.com/800x500/1a1a1a/8b5cf6?text=Features+Screen",
+        "https://via.placeholder.com/800x500/1a1a1a/8b5cf6?text=Analytics+View",
+        "https://via.placeholder.com/800x500/1a1a1a/8b5cf6?text=Settings+Panel",
       ],
     },
     {
-      title: "Healthcare System",
+      title: "Enterprise Management System",
       description:
-        "Complete hospital management with patient records, scheduling, and telemedicine features.",
+        "Comprehensive business management solution with workflow automation, reporting, and multi-user access.",
       category: "enterprise",
       images: [
-        "https://via.placeholder.com/800x500/1a1a1a/10b981?text=Patient+Dashboard",
-        "https://via.placeholder.com/800x500/1a1a1a/10b981?text=Appointment+Booking",
-        "https://via.placeholder.com/800x500/1a1a1a/10b981?text=Medical+Records",
-        "https://via.placeholder.com/800x500/1a1a1a/10b981?text=Telemedicine",
-        "https://via.placeholder.com/800x500/1a1a1a/10b981?text=Billing+System",
+        "https://via.placeholder.com/800x500/1a1a1a/10b981?text=Admin+Dashboard",
+        "https://via.placeholder.com/800x500/1a1a1a/10b981?text=Project+Management",
+        "https://via.placeholder.com/800x500/1a1a1a/10b981?text=Team+Collaboration",
+        "https://via.placeholder.com/800x500/1a1a1a/10b981?text=Reports+Analytics",
+        "https://via.placeholder.com/800x500/1a1a1a/10b981?text=User+Management",
       ],
     },
     {
-      title: "Analytics Dashboard",
+      title: "Online Store Platform",
       description:
-        "Real-time data visualization with business intelligence and predictive analytics.",
-      category: "data",
+        "Complete e-commerce solution with payment processing, inventory management, and customer analytics.",
+      category: "ecommerce",
       images: [
-        "https://via.placeholder.com/800x500/1a1a1a/f59e0b?text=Main+Dashboard",
-        "https://via.placeholder.com/800x500/1a1a1a/f59e0b?text=Sales+Analytics",
-        "https://via.placeholder.com/800x500/1a1a1a/f59e0b?text=User+Metrics",
-        "https://via.placeholder.com/800x500/1a1a1a/f59e0b?text=Revenue+Reports",
-        "https://via.placeholder.com/800x500/1a1a1a/f59e0b?text=Predictive+Models",
+        "https://via.placeholder.com/800x500/1a1a1a/f59e0b?text=Product+Catalog",
+        "https://via.placeholder.com/800x500/1a1a1a/f59e0b?text=Shopping+Cart",
+        "https://via.placeholder.com/800x500/1a1a1a/f59e0b?text=Checkout+Process",
+        "https://via.placeholder.com/800x500/1a1a1a/f59e0b?text=Order+Management",
+        "https://via.placeholder.com/800x500/1a1a1a/f59e0b?text=Sales+Dashboard",
       ],
     },
     {
-      title: "Social Media Platform",
+      title: "Content Management System",
       description:
-        "Cross-platform networking with real-time messaging, content sharing, and community features.",
-      category: "social",
+        "Custom CMS solutions with drag-and-drop editors, multi-language support, and advanced publishing tools.",
+      category: "cms",
       images: [
-        "https://via.placeholder.com/800x500/1a1a1a/ef4444?text=News+Feed",
-        "https://via.placeholder.com/800x500/1a1a1a/ef4444?text=Profile+Page",
-        "https://via.placeholder.com/800x500/1a1a1a/ef4444?text=Messaging",
-        "https://via.placeholder.com/800x500/1a1a1a/ef4444?text=Groups",
-        "https://via.placeholder.com/800x500/1a1a1a/ef4444?text=Live+Streaming",
+        "https://via.placeholder.com/800x500/1a1a1a/ef4444?text=Content+Editor",
+        "https://via.placeholder.com/800x500/1a1a1a/ef4444?text=Media+Library",
+        "https://via.placeholder.com/800x500/1a1a1a/ef4444?text=Page+Builder",
+        "https://via.placeholder.com/800x500/1a1a1a/ef4444?text=SEO+Tools",
+        "https://via.placeholder.com/800x500/1a1a1a/ef4444?text=Analytics+Panel",
       ],
     },
     {
-      title: "Educational Platform",
+      title: "SaaS Application",
       description:
-        "Online learning management with interactive courses, progress tracking, and certification.",
-      category: "edtech",
+        "Cloud-based software solutions with subscription management, API integrations, and scalable infrastructure.",
+      category: "saas",
       images: [
-        "https://via.placeholder.com/800x500/1a1a1a/06b6d4?text=Course+Catalog",
-        "https://via.placeholder.com/800x500/1a1a1a/06b6d4?text=Video+Lessons",
-        "https://via.placeholder.com/800x500/1a1a1a/06b6d4?text=Interactive+Quiz",
-        "https://via.placeholder.com/800x500/1a1a1a/06b6d4?text=Progress+Tracking",
-        "https://via.placeholder.com/800x500/1a1a1a/06b6d4?text=Certificates",
+        "https://via.placeholder.com/800x500/1a1a1a/06b6d4?text=SaaS+Dashboard",
+        "https://via.placeholder.com/800x500/1a1a1a/06b6d4?text=Subscription+Plans",
+        "https://via.placeholder.com/800x500/1a1a1a/06b6d4?text=API+Integration",
+        "https://via.placeholder.com/800x500/1a1a1a/06b6d4?text=Usage+Analytics",
+        "https://via.placeholder.com/800x500/1a1a1a/06b6d4?text=Billing+System",
       ],
     },
   ];
 
   const teamMembers = [
     {
-      name: "Alex Rodriguez",
-      role: "Full-Stack Developer",
-      bio: "Specializes in React, Node.js, and cloud architecture. 5+ years building scalable web applications.",
-      image: "https://via.placeholder.com/300x300/1a1a1a/6366f1?text=AR",
-      skills: ["React", "Node.js", "AWS", "PostgreSQL"],
+      name: "David Kumar",
+      role: "Lead Developer",
+      bio: "Full-stack developer with 8+ years of experience in web and mobile app development, specializing in scalable solutions.",
+      image: "https://via.placeholder.com/300x300/1a1a1a/6366f1?text=DK",
+      skills: ["React", "Node.js", "Flutter", "AWS"],
     },
     {
-      name: "Sarah Chen",
+      name: "Priya Sharma",
       role: "UI/UX Designer",
-      bio: "Creates intuitive user experiences with a focus on modern design principles and accessibility.",
-      image: "https://via.placeholder.com/300x300/1a1a1a/8b5cf6?text=SC",
-      skills: ["Figma", "Design Systems", "User Research", "Prototyping"],
+      bio: "Creative designer focused on user-centered design and modern interfaces that enhance business growth.",
+      image: "https://via.placeholder.com/300x300/1a1a1a/8b5cf6?text=PS",
+      skills: ["Figma", "Adobe Creative Suite", "UX Research", "Prototyping"],
     },
     {
-      name: "Marcus Johnson",
-      role: "Mobile Developer",
-      bio: "Expert in Flutter and React Native development with a passion for cross-platform solutions.",
-      image: "https://via.placeholder.com/300x300/1a1a1a/10b981?text=MJ",
-      skills: ["Flutter", "React Native", "iOS", "Android"],
+      name: "Rajesh Patel",
+      role: "Backend Specialist",
+      bio: "Expert in database design and server architecture, ensuring robust and secure application backends.",
+      image: "https://via.placeholder.com/300x300/1a1a1a/10b981?text=RP",
+      skills: ["Python", "PostgreSQL", "MongoDB", "API Design"],
     },
     {
-      name: "Lisa Wang",
-      role: "DevOps Engineer",
-      bio: "Ensures seamless deployment and infrastructure management with modern DevOps practices.",
-      image: "https://via.placeholder.com/300x300/1a1a1a/f59e0b?text=LW",
-      skills: ["Docker", "Kubernetes", "CI/CD", "Monitoring"],
+      name: "Anita Singh",
+      role: "Project Manager",
+      bio: "Experienced project manager ensuring timely delivery and smooth communication between teams and clients.",
+      image: "https://via.placeholder.com/300x300/1a1a1a/f59e0b?text=AS",
+      skills: ["Agile", "Scrum", "Client Relations", "Quality Assurance"],
     },
   ];
 
   const features = [
     {
-      title: "Rapid Prototyping",
+      title: "Custom Development",
       description:
-        "From concept to working prototype in just 48 hours. Validate your ideas quickly.",
+        "Tailored applications and websites built specifically for your business needs and goals.",
       icon: "⚡",
     },
     {
-      title: "Scalable Architecture",
+      title: "Scalable Solutions",
       description:
-        "Built for growth. Our solutions scale from startup to enterprise seamlessly.",
+        "Future-proof architecture that grows with your business, from startup to enterprise.",
       icon: "📈",
     },
     {
-      title: "Modern Tech Stack",
+      title: "Latest Technologies",
       description:
-        "Using cutting-edge technologies that ensure performance and maintainability.",
+        "Cutting-edge frameworks and tools ensuring optimal performance and user experience.",
       icon: "🚀",
     },
     {
-      title: "Full-Stack Expertise",
+      title: "End-to-End Service",
       description:
-        "End-to-end development from database design to user interface.",
+        "Complete development lifecycle from planning and design to deployment and maintenance.",
       icon: "🔧",
     },
   ];
@@ -198,26 +293,7 @@ const LottoWebsite = () => {
     (product) => product.category === selectedCategory
   );
 
-  const nextImage = () => {
-    if (selectedProject && selectedProject.images) {
-      setCurrentImageIndex((prev) =>
-        prev === selectedProject.images.length - 1 ? 0 : prev + 1
-      );
-    }
-  };
 
-  const prevImage = () => {
-    if (selectedProject && selectedProject.images) {
-      setCurrentImageIndex((prev) =>
-        prev === 0 ? selectedProject.images.length - 1 : prev - 1
-      );
-    }
-  };
-
-  const filteredProducts =
-    selectedCategory === "all"
-      ? products
-      : products.filter((product) => product.category === selectedCategory);
 
   const styles = {
     container: {
@@ -396,6 +472,7 @@ const LottoWebsite = () => {
       border: "1px solid #27272a",
       boxShadow: "0 8px 32px rgba(0, 0, 0, 0.4), 0 2px 8px rgba(0, 0, 0, 0.2)",
       position: "relative",
+      overflow: "visible",
     },
     sectionContent: {
       padding: "5rem 1rem",
@@ -420,17 +497,26 @@ const LottoWebsite = () => {
     },
     categoryFilter: {
       display: "flex",
-      justifyContent: "center",
       gap: "1rem",
       marginBottom: "1rem",
-      flexWrap: "wrap",
+      overflowX: "auto",
+      overflowY: "visible",
+      width: "100%",
+      position: "relative",
+      scrollBehavior: "smooth",
+    },
+    categoryContainer: {
+      display: "flex",
+      gap: "1rem",
+      width: "fit-content",
+      padding: "10px 0",
     },
     categoryCircle: {
       width: "60px",
       height: "60px",
       borderRadius: "50%",
       background: "linear-gradient(145deg, #0a0a0a 0%, #1a1a1a 100%)",
-      border: "2px solid #27272a",
+      border: "none",
       display: "flex",
       flexDirection: "column",
       alignItems: "center",
@@ -438,13 +524,10 @@ const LottoWebsite = () => {
       cursor: "pointer",
       transition: "all 0.3s ease",
       position: "relative",
-      boxShadow: "0 4px 16px rgba(0, 0, 0, 0.3)",
     },
     categoryCircleActive: {
-      borderColor: "#6366f1",
-      background: "linear-gradient(145deg, #6366f1 0%, #8b5cf6 100%)",
+      background: "linear-gradient(145deg, #ffffff 0%, #f4f4f5 100%)",
       transform: "scale(1.1)",
-      boxShadow: "0 8px 24px rgba(99, 102, 241, 0.4)",
     },
     categoryIcon: {
       fontSize: "1.5rem",
@@ -839,6 +922,7 @@ const LottoWebsite = () => {
             50% { transform: translateY(-30px) rotate(5deg); }
           }
           
+          
           .tech-card:hover, .project-image:hover, .team-card:hover {
             transform: translateY(-8px);
             border-color: #3f3f46;
@@ -907,6 +991,35 @@ const LottoWebsite = () => {
             border-color: #3f3f46;
           }
           
+          .category-circle {
+            z-index: 1001 !important;
+          }
+          
+          .category-circle.active {
+            z-index: 1002 !important;
+          }
+          
+          .category-filter {
+            scrollbar-width: none;
+            -ms-overflow-style: none;
+            user-select: none;
+            -webkit-overflow-scrolling: touch;
+            will-change: scroll-position;
+            transform: translateZ(0);
+          }
+          
+          .category-filter::-webkit-scrollbar {
+            display: none;
+          }
+          
+          .category-filter:active {
+            cursor: grabbing;
+          }
+          
+          .category-circle {
+            transition: transform 0.15s ease-out;
+          }
+          
           .primary-button:hover {
             background-color: #f4f4f5;
             transform: translateY(-1px);
@@ -959,7 +1072,7 @@ const LottoWebsite = () => {
       <header style={styles.header}>
         <div style={styles.logo}>
           <img
-            src="/logo192.png"
+            src="favicon.ico"
             alt="LOTTO Logo"
             style={{
               width: "32px",
@@ -968,49 +1081,57 @@ const LottoWebsite = () => {
               objectFit: "contain",
             }}
           />
-          <span>SOLID APPS</span>
+          <span>SolidApps</span>
         </div>
         <nav style={styles.nav}>
-          <a
+          <button
             style={{
               ...styles.navItem,
               ...(activeSection === "home" ? styles.navItemActive : {}),
+              background: "none",
+              border: "none",
             }}
             className="nav-item"
             onClick={() => scrollToSection("home")}
           >
-            Product
-          </a>
-          <a
+            Services
+          </button>
+          <button
             style={{
               ...styles.navItem,
               ...(activeSection === "features" ? styles.navItemActive : {}),
+              background: "none",
+              border: "none",
             }}
             className="nav-item"
             onClick={() => scrollToSection("features")}
           >
             Features
-          </a>
-          <a
+          </button>
+          <button
             style={{
               ...styles.navItem,
               ...(activeSection === "technology" ? styles.navItemActive : {}),
+              background: "none",
+              border: "none",
             }}
             className="nav-item"
             onClick={() => scrollToSection("technology")}
           >
             Technology
-          </a>
-          <a
+          </button>
+          <button
             style={{
               ...styles.navItem,
               ...(activeSection === "projects" ? styles.navItemActive : {}),
+              background: "none",
+              border: "none",
             }}
             className="nav-item"
             onClick={() => scrollToSection("projects")}
           >
-            Projects
-          </a>
+            Portfolio
+          </button>
         </nav>
       </header>
 
@@ -1020,11 +1141,10 @@ const LottoWebsite = () => {
           <div style={styles.heroBackground}></div>
           <div style={styles.heroContent}>
             <h1 style={styles.heroTitle} className="hero-title">
-              IDEA into MVP
+              Transform Ideas into Digital Solutions
             </h1>
             <p style={styles.heroSubtitle} className="hero-subtitle">
-              LOTTO is a purpose-built development team for modern product
-              development. We streamline your ideas from concept to deployment.
+              SolidApps is a leading software development company specializing in custom applications and websites. We bring your vision to life with cutting-edge technology and exceptional design.
             </p>
             <div style={styles.heroButtons} className="hero-buttons">
               <a
@@ -1055,12 +1175,10 @@ const LottoWebsite = () => {
 
         <section id="features" style={styles.featuresSection}>
           <h2 style={styles.sectionTitle} className="section-title">
-            Made for modern product teams
+            Built for Modern Businesses
           </h2>
           <p style={styles.sectionSubtitle}>
-            LOTTO is shaped by the practices and principles that distinguish
-            world-class product teams from the rest: relentless focus, fast
-            execution, and a commitment to the quality of craft.
+            SolidApps combines innovative technology with proven development methodologies to deliver exceptional software solutions that drive business growth and user engagement.
           </p>
           <div style={styles.featuresGrid}>
             {features.map((feature, index) => (
@@ -1112,11 +1230,11 @@ const LottoWebsite = () => {
       <section id="projects" style={styles.section} className="section">
         <div style={styles.sectionContent}>
           <h2 style={styles.sectionTitle} className="section-title">
-            Powering the world's best product teams
+            Empowering Businesses Worldwide
           </h2>
           <p style={styles.sectionSubtitle}>
-            From next-gen startups to established enterprises, we deliver
-            solutions that scale with your business.
+            From innovative startups to established enterprises, SolidApps delivers
+            custom software solutions that drive growth and success.
           </p>
         </div>
       </section>
@@ -1124,73 +1242,93 @@ const LottoWebsite = () => {
       {/* Category Logos */}
       <section
         style={{
-          ...styles.section,
-          padding: "0 0.5rem",
-          margin: "0.5rem auto",
+          padding: "0",
+          margin: "-1rem auto -1rem auto",
           background: "none",
           boxShadow: "none",
           border: "none",
+          maxWidth: "95vw",
+          position: "relative",
+          zIndex: 1000,
+          overflow: "visible",
         }}
       >
-        <div style={{padding: "0.5rem 1rem 0.25rem 1rem"}}>
-          <div style={styles.categoryFilter} className="category-filter">
-            {projectCategories.map((category) => (
-              <React.Fragment key={category.id}>
+        <div style={{padding: "0 1rem", position: "relative", zIndex: 20}}>
+          <div 
+            style={{...styles.categoryFilter, cursor: 'grab'}} 
+            className="category-filter" 
+            onWheel={handleWheel}
+            onMouseDown={handleMouseDown}
+            onMouseLeave={handleMouseLeave}
+            onMouseUp={handleMouseUp}
+            onMouseMove={handleMouseMove}
+          >
+            <div style={styles.categoryContainer}>
+              {[...projectCategories, ...dummyCircles, ...projectCategories, ...dummyCircles, ...projectCategories, ...dummyCircles].map((item, index) => (
                 <div
+                  key={`${item.id}-${index}`}
                   style={{
                     display: "flex",
                     flexDirection: "column",
                     alignItems: "center",
+                    minWidth: "80px",
+                    flexShrink: 0,
                   }}
                 >
                   <div
                     style={{
-                      ...styles.categoryCircle,
-                      ...(selectedCategory === category.id
-                        ? styles.categoryCircleActive
-                        : {}),
+                      ...(item.color ? {
+                        width: "60px",
+                        height: "60px",
+                        borderRadius: "50%",
+                        background: `linear-gradient(135deg, ${item.color} 0%, ${item.color}dd 100%)`,
+                        border: "none",
+                        display: "flex",
+                        flexDirection: "column",
+                        alignItems: "center",
+                        justifyContent: "center",
+                        cursor: "pointer",
+                        transition: "all 0.3s ease",
+                        position: "relative",
+                      } : {
+                        ...styles.categoryCircle,
+                        ...(selectedCategory === item.id
+                          ? styles.categoryCircleActive
+                          : {}),
+                      }),
                     }}
-                    className="category-circle"
-                    onClick={() => setSelectedCategory(category.id)}
+                    className={`category-circle ${selectedCategory === item.id ? 'active' : ''}`}
+                    onClick={() => item.id && !item.color && setSelectedCategory(item.id)}
                   >
-                    <div style={styles.categoryIcon}>
-                      {typeof category.icon === "string" &&
-                      category.icon.endsWith(".png") ? (
-                        <img
-                          src={category.icon}
-                          alt={category.name}
-                          style={{
-                            width: "40px",
-                            height: "40px",
-                            objectFit: "contain",
-                            borderRadius: "50%",
-                            padding: "4px",
-                            boxSizing: "border-box",
-                            display: "block",
-                            margin: "0 auto",
-                            boxShadow: "0 1px 4px rgba(0,0,0,0.10)",
-                          }}
-                        />
-                      ) : (
-                        <span style={{ fontSize: "2.4rem", lineHeight: 1 }}>
-                          {category.icon}
-                        </span>
-                      )}
-                    </div>
-                  </div>
-                  <div
-                    style={{
-                      ...styles.categoryLabel,
-                      marginTop: "0.5rem",
-                      textAlign: "center",
-                      width: "100%",
-                    }}
-                  >
-                    {category.name}
+                    {!item.color && (
+                      <div style={styles.categoryIcon}>
+                        {typeof item.icon === "string" &&
+                        item.icon.endsWith(".png") ? (
+                          <img
+                            src={item.icon}
+                            alt={item.name}
+                            style={{
+                              width: "40px",
+                              height: "40px",
+                              objectFit: "contain",
+                              borderRadius: "50%",
+                              padding: "4px",
+                              boxSizing: "border-box",
+                              display: "block",
+                              margin: "0 auto",
+                              }}
+                          />
+                        ) : (
+                          <span style={{ fontSize: "2.4rem", lineHeight: 1 }}>
+                            {item.icon}
+                          </span>
+                        )}
+                      </div>
+                    )}
                   </div>
                 </div>
-              </React.Fragment>
-            ))}
+              ))}
+            </div>
           </div>
         </div>
       </section>
@@ -1252,11 +1390,10 @@ const LottoWebsite = () => {
       <section id="team" style={styles.section} className="section">
         <div style={styles.sectionContent}>
           <h2 style={styles.sectionTitle} className="section-title">
-            Meet our team
+            Meet Our Expert Team
           </h2>
           <p style={styles.sectionSubtitle}>
-            Our diverse team of experts brings together years of experience in
-            modern software development, design, and engineering.
+            Our dedicated team of professionals combines technical expertise with creative vision to deliver exceptional software solutions for your business.
           </p>
           <div style={styles.teamContainer}>
             <div style={styles.teamScrollContainer}>
@@ -1320,20 +1457,18 @@ const LottoWebsite = () => {
           }}
         ></div>
         <div style={{ ...styles.ctaContent, position: "relative", zIndex: 2 }}>
-          <h2 style={styles.ctaTitle}>Ready to transform your idea?</h2>
+          <h2 style={styles.ctaTitle}>Ready to Build Your Digital Future?</h2>
           <p style={styles.ctaDescription}>
-            Professional website development starting at just ₹999. Get a
-            stunning, responsive website for your business with modern design
-            and optimized performance.
+            Partner with SolidApps for professional software development. From custom applications to enterprise websites, we deliver quality solutions that drive business success.
           </p>
           <a href="#contact" style={styles.ctaButton} className="cta-button">
-            Start your project
+            Start Your Project
           </a>
         </div>
       </div>
 
       <footer style={styles.footer}>
-        <p>&copy; 2025 LOTTO. All rights reserved.</p>
+        <p>&copy; 2025 SolidApps. All rights reserved. | Building digital solutions for tomorrow's businesses.</p>
       </footer>
     </div>
   );
