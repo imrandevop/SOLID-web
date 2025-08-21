@@ -13,14 +13,14 @@ export const styles = {
     top: 0,
     left: 0,
     right: 0,
-    backgroundColor: "rgba(0, 0, 0, 0.8)",
+    backgroundColor: "rgba(0, 0, 0, 0.3)",
     backdropFilter: "blur(20px)",
-    borderBottom: "1px solid #1a1a1a",
+    borderBottom: "1px solid rgba(255, 255, 255, 0.1)",
     padding: "1rem 2rem",
     display: "flex",
     justifyContent: "space-between",
     alignItems: "center",
-    zIndex: 1000,
+    zIndex: 1100,
   },
   logo: {
     display: "flex",
@@ -561,11 +561,11 @@ export const globalCSS = `
   }
   
   .category-circle {
-    z-index: 1001 !important;
+    z-index: 999 !important;
   }
   
   .category-circle.active {
-    z-index: 1002 !important;
+    z-index: 999 !important;
   }
   
   .category-filter {
