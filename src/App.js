@@ -1307,6 +1307,7 @@ const LottoWebsite = () => {
                           <img
                             src={item.icon}
                             alt={item.name}
+                            draggable="false"
                             style={{
                               width: "40px",
                               height: "40px",
@@ -1316,6 +1317,8 @@ const LottoWebsite = () => {
                               boxSizing: "border-box",
                               display: "block",
                               margin: "0 auto",
+                              pointerEvents: "none",
+                              userSelect: "none",
                               }}
                           />
                         ) : (
