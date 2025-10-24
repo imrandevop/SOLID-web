@@ -2,12 +2,26 @@ import React from 'react';
 import { styles } from '../styles/styles';
 import { features } from '../data/appData';
 import { ContainerScroll } from './ui/container-scroll-animation';
+import { SpiralAnimation } from './ui/spiral-animation';
 
 const Hero = ({ scrollToSection }) => {
+  const spiralContainerStyle = {
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    right: 0,
+    bottom: 0,
+    zIndex: 1,
+    overflow: 'hidden',
+    opacity: 0.4,
+  };
+
   return (
     <div style={styles.heroFeaturesContainer}>
       <section id="home" style={styles.hero}>
-        <div style={styles.heroBackground}></div>
+        <div style={spiralContainerStyle}>
+          <SpiralAnimation />
+        </div>
         <div style={styles.heroContent}>
           <h1 style={styles.heroTitle} className="hero-title">
             Transform Ideas into Digital Solutions

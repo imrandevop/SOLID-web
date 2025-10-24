@@ -81,28 +81,6 @@ export const styles = {
     overflow: "hidden",
     minHeight: "600px",
   },
-  heroBackground: {
-    position: "absolute",
-    top: 0,
-    left: 0,
-    right: 0,
-    height: "150%",
-    opacity: 0.15,
-    zIndex: 1,
-    background: `
-    linear-gradient(180deg, 
-      rgba(0,0,0,0) 0%, 
-      rgba(0,0,0,0.1) 40%, 
-      rgba(0,0,0,0.5) 75%, 
-      rgba(0,0,0,0.9) 90%,
-      rgba(0,0,0,1) 100%
-    ),
-    url("/hero-background.jpg")
-  `,
-    backgroundSize: "cover",
-    backgroundPosition: "center",
-    backgroundRepeat: "no-repeat",
-  },
   heroContent: {
     maxWidth: "800px",
     margin: "0 auto",
