@@ -13,8 +13,8 @@ export const styles = {
     top: 0,
     left: 0,
     right: 0,
-    backgroundColor: "rgba(0, 0, 0, 0.3)",
-    backdropFilter: "blur(20px)",
+    backgroundColor: "rgba(0, 0, 0, 0.5)",
+    backdropFilter: "blur(20px) saturate(180%)",
     borderBottom: "1px solid rgba(255, 255, 255, 0.1)",
     padding: "1rem 2rem",
     display: "flex",
@@ -159,7 +159,7 @@ export const styles = {
     display: "inline-block",
   },
   featuresSection: {
-    padding: "5rem 1rem",
+    padding: "0",
     position: "relative",
     zIndex: 10,
   },
@@ -191,9 +191,10 @@ export const styles = {
     fontSize: "1.125rem",
     color: "#a1a1aa",
     textAlign: "center",
-    marginBottom: "4rem",
-    maxWidth: "600px",
-    margin: "0 auto 4rem",
+    marginBottom: "2rem",
+    maxWidth: "800px",
+    margin: "0 auto 2rem",
+    lineHeight: "1.6",
   },
   categoryFilter: {
     display: "flex",
@@ -411,7 +412,8 @@ export const styles = {
     display: "grid",
     gridTemplateColumns: "repeat(auto-fit, minmax(250px, 1fr))",
     gap: "2rem",
-    marginTop: "3rem",
+    width: "100%",
+    margin: "0 auto",
   },
   featureCard: {
     textAlign: "center",
@@ -607,6 +609,7 @@ export const globalCSS = `
   .nav-item:hover {
     color: #ffffff;
   }
+    
   
   @media (max-width: 768px) {
     .hero-title { font-size: 2.5rem !important; }

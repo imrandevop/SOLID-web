@@ -1,6 +1,7 @@
 import React from 'react';
 import { styles } from '../styles/styles';
 import { features } from '../data/appData';
+import { ContainerScroll } from './ui/container-scroll-animation';
 
 const Hero = ({ scrollToSection }) => {
   return (
@@ -42,21 +43,28 @@ const Hero = ({ scrollToSection }) => {
       </section>
 
       <section id="features" style={styles.featuresSection}>
-        <h2 style={styles.sectionTitle} className="section-title">
-          Built for Modern Businesses
-        </h2>
-        <p style={styles.sectionSubtitle}>
-          SolidApps combines innovative technology with proven development methodologies to deliver exceptional software solutions that drive business growth and user engagement.
-        </p>
-        <div style={styles.featuresGrid}>
-          {features.map((feature, index) => (
-            <div key={index} style={styles.featureCard}>
-              <div style={styles.featureIcon}>{feature.icon}</div>
-              <h3 style={styles.featureTitle}>{feature.title}</h3>
-              <p style={styles.featureDescription}>{feature.description}</p>
-            </div>
-          ))}
-        </div>
+        <ContainerScroll
+          titleComponent={
+            <>
+              <h2 style={styles.sectionTitle} className="section-title">
+                Built for Modern Businesses
+              </h2>
+              <p style={styles.sectionSubtitle}>
+                SolidApps combines innovative technology with proven development methodologies to deliver exceptional software solutions that drive business growth and user engagement.
+              </p>
+            </>
+          }
+        >
+          <div style={styles.featuresGrid}>
+            {features.map((feature, index) => (
+              <div key={index} style={styles.featureCard}>
+                <div style={styles.featureIcon}>{feature.icon}</div>
+                <h3 style={styles.featureTitle}>{feature.title}</h3>
+                <p style={styles.featureDescription}>{feature.description}</p>
+              </div>
+            ))}
+          </div>
+        </ContainerScroll>
       </section>
     </div>
   );
