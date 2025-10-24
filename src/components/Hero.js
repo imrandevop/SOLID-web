@@ -1,4 +1,5 @@
 import React from 'react';
+import { motion } from 'framer-motion';
 import { styles } from '../styles/styles';
 import { features } from '../data/appData';
 import { ContainerScroll } from './ui/container-scroll-animation';
@@ -22,14 +23,69 @@ const Hero = ({ scrollToSection }) => {
         <div style={spiralContainerStyle}>
           <SpiralAnimation />
         </div>
-        <div style={styles.heroContent}>
-          <h1 style={styles.heroTitle} className="hero-title">
+        <motion.div
+          style={styles.heroContent}
+          initial={{ opacity: 0, y: 30 }}
+          animate={{
+            opacity: [0, 1, 1, 0],
+            y: [30, 0, 0, -30]
+          }}
+          transition={{
+            duration: 15,
+            times: [0, 0.15, 0.85, 1],
+            repeat: Infinity,
+            ease: "easeInOut"
+          }}
+        >
+          <motion.h1
+            style={styles.heroTitle}
+            className="hero-title"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{
+              opacity: [0, 1, 1, 0],
+              y: [20, 0, 0, -20]
+            }}
+            transition={{
+              duration: 15,
+              times: [0, 0.18, 0.82, 1],
+              repeat: Infinity,
+              ease: "easeInOut"
+            }}
+          >
             Transform Ideas into Digital Solutions
-          </h1>
-          <p style={styles.heroSubtitle} className="hero-subtitle">
+          </motion.h1>
+          <motion.p
+            style={styles.heroSubtitle}
+            className="hero-subtitle"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{
+              opacity: [0, 1, 1, 0],
+              y: [20, 0, 0, -20]
+            }}
+            transition={{
+              duration: 15,
+              times: [0, 0.21, 0.79, 1],
+              repeat: Infinity,
+              ease: "easeInOut"
+            }}
+          >
             SolidApps is a leading software development company specializing in custom applications and websites. We bring your vision to life with cutting-edge technology and exceptional design.
-          </p>
-          <div style={styles.heroButtons} className="hero-buttons">
+          </motion.p>
+          <motion.div
+            style={styles.heroButtons}
+            className="hero-buttons"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{
+              opacity: [0, 1, 1, 0],
+              y: [20, 0, 0, -20]
+            }}
+            transition={{
+              duration: 15,
+              times: [0, 0.24, 0.76, 1],
+              repeat: Infinity,
+              ease: "easeInOut"
+            }}
+          >
             <a
               href="#projects"
               style={styles.primaryButton}
@@ -52,8 +108,8 @@ const Hero = ({ scrollToSection }) => {
             >
               Learn more
             </a>
-          </div>
-        </div>
+          </motion.div>
+        </motion.div>
       </section>
 
       <section id="features" style={styles.featuresSection}>
